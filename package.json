@@ -5,7 +5,11 @@
   "scripts": {},
   "private": true,
   "dependencies": {
+    "@apollo/datasource-rest": "^6.2.2",
+    "@apollo/server": "^4.9.5",
     "axios": "^1.0.0",
+    "graphql": "^16.8.1",
+    "graphql-tag": "^2.12.6",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
