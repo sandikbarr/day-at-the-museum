@@ -14,7 +14,12 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@day-at-the-musuem/next-ui": ["libs/next/ui/src/index.ts"],
+      "@day-at-the-musuem/next-ui/server": ["libs/next/ui/src/server.ts"],
+      "@day-at-the-musuem/shared-apollo": ["libs/shared/apollo/src/index.ts"],
+      "@day-at-the-musuem/shared-ui": ["libs/shared/ui/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }

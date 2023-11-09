@@ -1,0 +1,19 @@
+/*
+ * Replace this with your own classes
+ *
+ * e.g.
+ * .container {
+ * }
+*/
+.card {
+  min-width: 440px;
+  max-width: 500px;
+  border: 1px solid #eee;
+  border-radius: 0.5em;
+}
+
+.card > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

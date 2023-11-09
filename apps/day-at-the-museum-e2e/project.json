@@ -1,0 +1,29 @@
+{
+  "name": "day-at-the-museum-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/day-at-the-museum-e2e/src",
+  "targets": {
+    "e2e": {
+      "executor": "@nx/cypress:cypress",
+      "options": {
+        "cypressConfig": "apps/day-at-the-museum-e2e/cypress.config.ts",
+        "testingType": "e2e",
+        "devServerTarget": "day-at-the-museum:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "day-at-the-museum:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/day-at-the-museum-e2e/**/*.{js,ts}"]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["day-at-the-museum"]
+}
