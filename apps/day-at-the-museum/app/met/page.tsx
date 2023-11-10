@@ -1,58 +1,10 @@
 import styles from './met.module.css';
 
-import { Cursor } from '@day-at-the-musuem/next-ui';
+import { LoadMore } from '@day-at-the-musuem/next-ui';
 import { Search } from '@day-at-the-musuem/next-ui';
-import { Card } from '@day-at-the-musuem/shared-ui';
+import { Card, CardCollection } from '@day-at-the-musuem/shared-ui';
 
-import { getClient } from '@day-at-the-musuem/shared-apollo';
-import { gql } from '@apollo/client';
-
-const query = gql`
-  query Query(
-    $query: String
-    $hasImages: Boolean
-    $pageSize: Int
-    $after: Int
-  ) {
-    metMuseumSearch(
-      query: $query
-      hasImages: $hasImages
-      pageSize: $pageSize
-      after: $after
-    ) {
-      total
-      cursor
-      hasMore
-      objects {
-        objectID
-        object {
-          primaryImage
-          department
-          objectName
-          title
-          culture
-          period
-          dynasty
-          reign
-          artistDisplayName
-          artistDisplayBio
-          objectDate
-          medium
-          creditLine
-        }
-      }
-    }
-  }
-`;
-
-interface MetCollection {
-  metMuseumSearch: {
-    total: number;
-    cursor: number;
-    hasMore: boolean;
-    objects: Array<unknown>;
-  };
-}
+import { fetchMet } from '@day-at-the-musuem/actions';
 
 export interface MetProps {
   searchParams?: {
@@ -64,40 +16,23 @@ export interface MetProps {
 
 export async function Page({ searchParams }: MetProps) {
   const searchQuery = searchParams?.query || 'portrait';
-  const after = searchParams?.after ? Number(searchParams.after) : null;
+  const after = searchParams?.after ? Number(searchParams.after) : undefined;
   const hasImages = searchParams?.hasImages
     ? Boolean(searchParams.hasImages)
-    : null;
+    : undefined;
 
-  const metCollection = await getClient().query<MetCollection>({
-    query,
-    variables: {
-      query: searchQuery,
-      ...(hasImages !== null && { hasImages }),
-      pageSize: 12,
-      ...(after !== null && { after }),
-    },
-  });
+  const metCollection = await fetchMet(searchQuery, hasImages, after);
 
   return (
     <div className={styles.met}>
+      <h1>Browse The Metropolitan Museum of Art Collection</h1>
       <div className={styles.searchParams}>
         <Search placeholder="Search collection..." />
-        <Cursor
-          after={
-            metCollection.data.metMuseumSearch.hasMore &&
-            (
-              metCollection.data.metMuseumSearch.objects[
-                metCollection.data.metMuseumSearch.objects.length - 1
-              ] as any
-            ).objectID
-          }
-          return={!!searchParams?.after}
-        ></Cursor>
       </div>
-      <div className={styles.cards}>
-        {metCollection.data.metMuseumSearch.objects.map((obj: any) => (
+      <CardCollection>
+        {metCollection.objects.map((obj: any) => (
           <Card
+            key={obj.objectID}
             objectID={obj.objectID}
             title={obj.object.title}
             primaryImage={obj.object.primaryImage}
@@ -112,7 +47,14 @@ export async function Page({ searchParams }: MetProps) {
             creditLine={obj.object.creditLine}
           />
         ))}
-      </div>
+        <LoadMore
+          query={searchQuery}
+          hasImages={hasImages}
+          initialCursor={
+            (metCollection.objects[metCollection.objects.length - 1] as any).objectID
+          }
+        />
+      </CardCollection>
     </div>
   );
 }

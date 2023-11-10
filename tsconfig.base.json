@@ -15,9 +15,15 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@day-at-the-musuem/actions": ["libs/next/actions/src/index.ts"],
+      "@day-at-the-musuem/apollo-client": [
+        "libs/next/apollo-client/src/index.ts"
+      ],
+      "@day-at-the-musuem/apollo-client/server": [
+        "libs/next/apollo-client/src/server.ts"
+      ],
       "@day-at-the-musuem/next-ui": ["libs/next/ui/src/index.ts"],
       "@day-at-the-musuem/next-ui/server": ["libs/next/ui/src/server.ts"],
-      "@day-at-the-musuem/shared-apollo": ["libs/shared/apollo/src/index.ts"],
       "@day-at-the-musuem/shared-ui": ["libs/shared/ui/src/index.ts"]
     }
   },

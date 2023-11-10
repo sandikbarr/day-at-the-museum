@@ -18,7 +18,7 @@ export interface CardProps {
 
 export function Card(props: CardProps) {
   return (
-    <div key={props.objectID} className={styles.card}>
+    <div className={styles.card}>
       <div>
         <h2>{props.title}</h2>
         {props.primaryImage && (
