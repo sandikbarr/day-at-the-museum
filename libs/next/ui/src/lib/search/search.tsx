@@ -6,10 +6,10 @@ import {
   usePathname,
   useRouter,
 } from 'next/navigation';
+import { useDebouncedCallback } from 'use-debounce';
 
 import styles from './search.module.css';
 
-/* eslint-disable-next-line */
 export interface SearchProps {
   placeholder?: string;
 }
@@ -19,7 +19,7 @@ export function Search({ placeholder }: SearchProps) {
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  function setSearchQuery(term: string) {
+  const setSearchQuery = useDebouncedCallback((term: string) => {
     const params = new URLSearchParams(
       searchParams as ReadonlyURLSearchParams & {
         size: number;
@@ -30,9 +30,9 @@ export function Search({ placeholder }: SearchProps) {
     } else {
       params.delete('query');
     }
-    
+
     replace(`${pathname}?${params.toString()}`);
-  }
+  }, 300);
 
   function setHasImages(hasImages: boolean) {
     const params = new URLSearchParams(
@@ -42,7 +42,7 @@ export function Search({ placeholder }: SearchProps) {
     );
 
     if (hasImages) {
-      params.set('hasImages', hasImages.toString())
+      params.set('hasImages', hasImages.toString());
     } else {
       params.delete('hasImages');
     }
@@ -64,7 +64,11 @@ export function Search({ placeholder }: SearchProps) {
       </label>
 
       <label className={styles.searchLabel}>
-        <input type="checkbox" defaultChecked={Boolean(searchParams.get('hasImages'))} onChange={(e) => setHasImages(e.target.checked)}/>
+        <input
+          type="checkbox"
+          defaultChecked={Boolean(searchParams.get('hasImages'))}
+          onChange={(e) => setHasImages(e.target.checked)}
+        />
         has images
       </label>
     </span>
