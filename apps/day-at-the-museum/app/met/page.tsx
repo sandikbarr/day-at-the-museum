@@ -32,6 +32,7 @@ export async function Page({ searchParams }: MetProps) {
           <Card
             key={obj.objectID}
             objectID={obj.objectID}
+            href={`/met/detail/${obj.objectID}`}
             title={obj.object.title}
             primaryImage={obj.object.primaryImage}
             objectName={obj.object.objectName}

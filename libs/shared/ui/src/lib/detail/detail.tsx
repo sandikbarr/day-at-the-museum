@@ -1,8 +1,9 @@
-import styles from './detail.module.css';
+import { ReactNode } from 'react';
 
 export interface DetailProps {
   objectID: number;
   title: string;
+  closeBtn?: ReactNode;
   primaryImage?: string;
   imageWidth?: string;
   objectName?: string;
@@ -18,6 +19,7 @@ export interface DetailProps {
 
 export function Detail({
   title,
+  closeBtn,
   primaryImage,
   imageWidth,
   objectName,
@@ -31,9 +33,13 @@ export function Detail({
   creditLine,
 }: DetailProps) {
   return (
-    <div className={styles.card}>
+    <div>
       <div className="flex flex-col items-center">
-        <h2 className="text-xl">{title}</h2>
+        <div className="flex justify-between w-full">
+          <span></span>
+          <h2 className="text-xl">{title}</h2>
+          <span>{closeBtn}</span>
+        </div>
         {primaryImage && (
           <img
             width={imageWidth || '400'}

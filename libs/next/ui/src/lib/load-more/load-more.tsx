@@ -1,13 +1,10 @@
 'use client';
 
-import styles from './load-more.module.css';
-
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useSuspenseQuery } from '@apollo/client';
 
 import { MetCollection, metSearchQuery } from '@day-at-the-musuem/apollo-client';
-// import { MetCollection, metSearchQuery } from './met-search-query';
 import { Card, Spinner } from '@day-at-the-musuem/shared-ui';
 
 export interface LoadMoreProps {
@@ -55,6 +52,7 @@ export function LoadMore({query, hasImages, initialCursor}: LoadMoreProps) {
         <Card
           key={obj.objectID}
           objectID={obj.objectID}
+          href={`/met/detail/${obj.objectID}`}
           title={obj.object.title}
           primaryImage={obj.object.primaryImage}
           objectName={obj.object.objectName}

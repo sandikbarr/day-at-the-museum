@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import NextUi from './next-ui';
+import BackButton from './back-button';
 
-describe('NextUi', () => {
+describe('BackButton', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<NextUi />);
+    const { baseElement } = render(<BackButton />);
     expect(baseElement).toBeTruthy();
   });
 });
