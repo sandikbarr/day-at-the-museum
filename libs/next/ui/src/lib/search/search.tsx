@@ -45,13 +45,17 @@ export function Search({ placeholder }: SearchProps) {
     router.replace(`${pathname}?${params.toString()}`);
   }
 
+  const query = searchParams.get('query')?.toString();
+  if (!query) {
+    setSearchQuery('painting')
+  }
   return (
     <>
       <label className="mr-4">
         Search:{' '}
         <input
           placeholder={placeholder}
-          defaultValue={searchParams.get('query')?.toString()}
+          defaultValue={query}
           onChange={(e) => {
             setSearchQuery(e.target.value);
           }}
