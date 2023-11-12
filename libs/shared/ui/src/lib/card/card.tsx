@@ -1,10 +1,12 @@
+import Link from 'next/link';
 import styles from './card.module.css';
 
-/* eslint-disable-next-line */
 export interface CardProps {
   objectID: number;
   title: string;
+  href: string;
   primaryImage?: string;
+  imageWidth?: string;
   objectName?: string;
   artistDisplayName?: string;
   artistDisplayBio?: string;
@@ -19,33 +21,23 @@ export interface CardProps {
 export function Card(props: CardProps) {
   return (
     <div className={styles.card}>
-      <div>
-        <h2>{props.title}</h2>
-        {props.primaryImage && (
-          <img
-            width="400"
-            src={props.primaryImage}
-            alt={props.objectName}
-          />
-        )}
-      </div>
-      <div>
+      <div className="flex items-center flex-col">
+        <Link href={props.href} className="flex flex-col items-center">
+          <h2 className="text-xl">{props.title}</h2>
+          {props.primaryImage && (
+            <img
+              width={props.imageWidth || "400"}
+              src={props.primaryImage}
+              alt={props.objectName}
+            />
+          )}
+        </Link>
         <p>
-          {props.artistDisplayName
-            ? props.artistDisplayName
-            : 'artist unknown'}
+          {props.artistDisplayName && (<>artist: {props.artistDisplayName}</>)}
         </p>
-        {props.artistDisplayBio && (
-          <p>{props.artistDisplayBio}</p>
-        )}
-        {props.objectDate && <p>{props.objectDate}</p>}
-        {props.medium && <p>{props.medium}</p>}
-        <ul>
-          {props.department && <li>{props.department}</li>}
-          {props.culture && <li>{props.culture}</li>}
-          {props.period && <li>{props.period}</li>}
-        </ul>
-        {props.creditLine && <p>{props.creditLine}</p>}
+        <p>
+          {props.department && (<>department: {props.department}</>)}
+        </p>
       </div>
     </div>
   );
