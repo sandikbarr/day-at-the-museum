@@ -1,5 +1,3 @@
-import styles from './met.module.css';
-
 import { LoadMore } from '@day-at-the-musuem/next-ui';
 import { Search } from '@day-at-the-musuem/next-ui';
 import { Card, CardCollection } from '@day-at-the-musuem/shared-ui';
@@ -24,9 +22,9 @@ export async function Page({ searchParams }: MetProps) {
   const metCollection = await fetchMet(searchQuery, hasImages, after);
 
   return (
-    <div className={styles.met}>
-      <h1>Browse The Metropolitan Museum of Art Collection</h1>
-      <div className={styles.searchParams}>
+    <div>
+      <h1 className="text-3xl flex justify-center">Browse The Metropolitan Museum of Art Collection</h1>
+      <div className="my-6 flex justify-center">
         <Search placeholder="Search collection..." />
       </div>
       <CardCollection>

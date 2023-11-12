@@ -9,7 +9,6 @@ import {
 
 import styles from './cursor.module.css';
 
-/* eslint-disable-next-line */
 export interface CursorProps {
   after?: number;
   return?: boolean;

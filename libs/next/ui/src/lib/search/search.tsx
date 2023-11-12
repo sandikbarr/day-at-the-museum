@@ -8,8 +8,6 @@ import {
 } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 
-import styles from './search.module.css';
-
 export interface SearchProps {
   placeholder?: string;
 }
@@ -17,42 +15,39 @@ export interface SearchProps {
 export function Search({ placeholder }: SearchProps) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  const { replace } = useRouter();
+  const router = useRouter();
 
-  const setSearchQuery = useDebouncedCallback((term: string) => {
-    const params = new URLSearchParams(
-      searchParams as ReadonlyURLSearchParams & {
+  function getURLSearchParams(params: ReadonlyURLSearchParams): URLSearchParams {
+    return new URLSearchParams(
+      params as ReadonlyURLSearchParams & {
         size: number;
       }
     );
+  }
+
+  const setSearchQuery = useDebouncedCallback((term: string) => {
+    const params = getURLSearchParams(searchParams);
     if (term) {
       params.set('query', term);
     } else {
       params.delete('query');
     }
-
-    replace(`${pathname}?${params.toString()}`);
+    router.replace(`${pathname}?${params.toString()}`);
   }, 300);
 
   function setHasImages(hasImages: boolean) {
-    const params = new URLSearchParams(
-      searchParams as ReadonlyURLSearchParams & {
-        size: number;
-      }
-    );
-
+    const params = getURLSearchParams(searchParams);
     if (hasImages) {
       params.set('hasImages', hasImages.toString());
     } else {
       params.delete('hasImages');
     }
-
-    replace(`${pathname}?${params.toString()}`);
+    router.replace(`${pathname}?${params.toString()}`);
   }
 
   return (
-    <span>
-      <label className={styles.searchLabel}>
+    <>
+      <label className="mr-4">
         Search:{' '}
         <input
           placeholder={placeholder}
@@ -63,7 +58,7 @@ export function Search({ placeholder }: SearchProps) {
         />
       </label>
 
-      <label className={styles.searchLabel}>
+      <label className="mr-4">
         <input
           type="checkbox"
           defaultChecked={Boolean(searchParams.get('hasImages'))}
@@ -71,7 +66,7 @@ export function Search({ placeholder }: SearchProps) {
         />
         has images
       </label>
-    </span>
+    </>
   );
 }
 
