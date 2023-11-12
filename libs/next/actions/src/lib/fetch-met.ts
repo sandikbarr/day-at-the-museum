@@ -1,6 +1,6 @@
 'use server';
 
-import { getClient, metSearchQuery, MetCollection, MetCollectionSearch  } from '@day-at-the-musuem/apollo-client/server';
+import { getClient, metSearchQuery, metObjectQuery, MetCollection, MetCollectionSearch, MetObject, MetCollectionObject  } from '@day-at-the-musuem/apollo-client/server';
 
 export async function fetchMet(query: string, hasImages?: boolean, after?: number): Promise<MetCollectionSearch> {
   const metCollection = await getClient().query<MetCollection>({
@@ -13,4 +13,14 @@ export async function fetchMet(query: string, hasImages?: boolean, after?: numbe
     },
   });
   return metCollection.data.metMuseumSearch;
+}
+
+export async function fetchMetObject(objectID: number): Promise<MetCollectionObject> {
+  const metObject = await getClient().query<MetObject>({
+    query: metObjectQuery,
+    variables: {
+      objectID
+    }
+  });
+  return metObject.data.metMuseumObject;
 }

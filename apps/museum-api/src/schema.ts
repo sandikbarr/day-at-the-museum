@@ -2,8 +2,10 @@ import { gql } from 'graphql-tag';
 
 export const typeDefs = gql`
   type Query {
-    "Query to serach met museum collection"
+    "Query to search met museum collection"
     metMuseumSearch(query: String, hasImages: Boolean, pageSize: Int, after: Int): MetMuseumObjectListPage
+    "Query to get single object by id"
+    metMuseumObject(objectID: Int): MetMuseumObject
   }
 
   type MetMuseumObjectListPage {

@@ -37,14 +37,3 @@ export const metSearchQuery = gql`
     }
   }
 `;
-
-export interface MetCollectionSearch {
-    total: number;
-    cursor: number;
-    hasMore: boolean;
-    objects: Array<unknown>;
-};
-
-export interface MetCollection {
-  metMuseumSearch: MetCollectionSearch;
-}
